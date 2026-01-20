@@ -8,31 +8,42 @@ namespace GarageSpace.IntegrationTests
     {
         public async Task InitializeAsync()
         {
+            await EnsureDatabaseMigrated();
             await CleanupDatabase();
         }
 
         public async Task DisposeAsync()
         {
-            // Optionally clean up after all tests
             await CleanupDatabase();
         }
 
-        public async Task CleanupDatabase()
+        private static MainDbContext CreateDbContext()
         {
-            // Load configuration (adjust path as needed)
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .AddJsonFile("appsettings.Development.json", optional: true)
+                .AddEnvironmentVariables()
                 .Build();
 
             var options = new DbContextOptionsBuilder<MainDbContext>()
                 .UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
                 .Options;
 
-            using var dbContext = new MainDbContext(options);
+            return new MainDbContext(options);
+        }
 
-            // Remove all data from all tables
+        private static async Task EnsureDatabaseMigrated()
+        {
+            await using var dbContext = CreateDbContext();
+            await dbContext.Database.MigrateAsync();
+        }
+
+        public async Task CleanupDatabase()
+        {
+            await EnsureDatabaseMigrated();
+            await using var dbContext = CreateDbContext();
+
             dbContext.Countries.RemoveRange(dbContext.Countries);
             dbContext.Journals.RemoveRange(dbContext.Journals);
             dbContext.JournalRecords.RemoveRange(dbContext.JournalRecords);
