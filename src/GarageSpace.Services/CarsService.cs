@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using GarageSpace.Contracts.Dto.Vehicle;
 using GarageSpace.Data.Models.EF.Vehicles;
 using GarageSpace.Repository.Interfaces.EF;
 using GarageSpace.Services.Interfaces;
+using GarageSpaceAPI.Contracts.Dto.Vehicle;
 
 namespace GarageSpace.Services
 {

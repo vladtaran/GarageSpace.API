@@ -5,8 +5,8 @@ using Microsoft.Extensions.Options;
 using NSubstitute;
 using System;
 using System.Threading.Tasks;
-using GarageSpace.Contracts;
-using GarageSpace.Contracts.Dto;
+using GarageSpaceAPI.Contracts;
+using GarageSpaceAPI.Contracts.Dto;
 using GarageSpace.Data.Models.EF;
 using GarageSpace.Repository.Interfaces.EF;
 using GarageSpace.Services;
@@ -23,6 +23,7 @@ public class UsersServiceTest
     private IOptions<AppSettings> _appSettings;
     private ILogger<UsersService> _usersServiceLoggerMock;
     private IMapper _mapperMock;
+    private IEventsPublisher _eventsPublisher;
 
     public UsersServiceTest()
     {
@@ -31,8 +32,9 @@ public class UsersServiceTest
         _passwordHasherMock = Substitute.For<IPasswordHasher<Services.Models.User>>();
         _usersServiceLoggerMock = Substitute.For<ILogger<UsersService>>();
         _mapperMock = Substitute.For<IMapper>();
+        _eventsPublisher = Substitute.For<IEventsPublisher>();
 
-        _usersService = new UsersService(_userRepositoryMock, _appSettings, _passwordHasherMock, _usersServiceLoggerMock, _mapperMock);
+        _usersService = new UsersService(_userRepositoryMock, _appSettings, _passwordHasherMock, _usersServiceLoggerMock, _mapperMock, _eventsPublisher);
     }
 
     [Fact]

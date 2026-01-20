@@ -4,6 +4,8 @@
 /src/GarageSpace/obj
 /src/GarageSpace.*/bin
 /src/GarageSpace.*/obj
+/src/GarageSpaceAPI.*/bin
+/src/GarageSpaceAPI.*/obj
 /Tests/bin
 /Tests/obj
 /.vs

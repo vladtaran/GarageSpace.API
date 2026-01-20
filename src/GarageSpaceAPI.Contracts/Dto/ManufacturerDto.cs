@@ -1,4 +1,4 @@
-﻿namespace GarageSpace.Contracts.Dto
+﻿namespace GarageSpaceAPI.Contracts.Dto
 {
     public class ManufacturerDto
     {

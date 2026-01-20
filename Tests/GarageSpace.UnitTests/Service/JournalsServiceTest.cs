@@ -3,11 +3,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using NSubstitute;
-using GarageSpace.Contracts.Dto;
 using GarageSpace.Data.Models.EF.CarJournal;
 using GarageSpace.Repository.Interfaces.EF;
 using GarageSpace.Services;
 using Xunit;
+using GarageSpaceAPI.Contracts.Dto;
 
 namespace GarageSpace.UnitTests.Service
 {

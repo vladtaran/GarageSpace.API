@@ -1,4 +1,4 @@
-﻿namespace GarageSpace.Contracts.Common;
+﻿namespace GarageSpaceAPI.Contracts.Common;
 
 public class PageOf<T> where T : class
 {

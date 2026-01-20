@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using GarageSpace.Contracts;
-using GarageSpace.Contracts.Dto;
-using GarageSpace.Contracts.Request;
+using GarageSpaceAPI.Contracts;
+using GarageSpaceAPI.Contracts.Dto;
+using GarageSpaceAPI.Contracts.Request;
 using GarageSpace.Controllers.Request;
 using GarageSpace.Services.Interfaces;
+using GarageSpaceAPI.Contracts.Dto;
 
 namespace GarageSpace.Controllers;
 

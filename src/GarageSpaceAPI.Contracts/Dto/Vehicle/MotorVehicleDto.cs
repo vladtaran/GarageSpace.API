@@ -1,4 +1,6 @@
-﻿namespace GarageSpace.Contracts.Dto.Vehicle
+﻿using GarageSpaceAPI.Contracts.Dto.Vehicle;
+
+namespace GarageSpaceAPI.Contracts.Dto.Vehicle
 {
     public class MotorVehicleDto : VehicleDto
     {

@@ -4,7 +4,7 @@ using Amazon.S3.Transfer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using GarageSpace.Contracts;
+using GarageSpaceAPI.Contracts;
 
 namespace GarageSpace.Controllers;
 

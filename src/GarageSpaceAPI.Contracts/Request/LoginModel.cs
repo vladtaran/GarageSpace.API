@@ -1,4 +1,4 @@
-﻿namespace GarageSpace.Contracts.Request;
+﻿namespace GarageSpaceAPI.Contracts.Request;
 
 public class LoginModel : IUserCredentials
 {

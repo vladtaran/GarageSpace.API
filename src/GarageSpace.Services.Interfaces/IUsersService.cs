@@ -1,4 +1,4 @@
-﻿using GarageSpace.Contracts.Dto;
+﻿using GarageSpaceAPI.Contracts.Dto;
 
 namespace GarageSpace.Services.Interfaces;
 
@@ -10,5 +10,6 @@ public interface IUsersService
     public Task<UserDto> GetUserById(long id);
     Task<UserDto> GetByNickname(string name);
 
+    Task<long> CreateUser(UserDto user);
     Task<bool> UpdateUser(long id, UserDto user);
 }

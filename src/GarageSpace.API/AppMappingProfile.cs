@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
-using GarageSpace.Contracts.Dto;
-using GarageSpace.Contracts.Dto.Vehicle;
+using GarageSpaceAPI.Contracts.Dto;
+using GarageSpaceAPI.Contracts.Dto.Vehicle;
 using GarageSpace.Controllers.Request;
 using GarageSpace.Data.Models.EF.CarJournal;
 using GarageSpace.Data.Models.EF.Vehicles;
+using GarageSpaceAPI.Contracts.Dto;
+using GarageSpaceAPI.Contracts.Dto.Vehicle;
 
 namespace GarageSpace;
 
