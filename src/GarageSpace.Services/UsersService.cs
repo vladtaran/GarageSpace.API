@@ -6,11 +6,12 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using GarageSpace.Contracts;
-using GarageSpace.Contracts.Dto;
+using GarageSpaceAPI.Contracts;
 using GarageSpace.Data.Models.EF;
 using GarageSpace.Repository.Interfaces.EF;
 using GarageSpace.Services.Interfaces;
+using GarageSpaceAPI.Contracts.Dto;
+using GarageSpace.Contracts;
 
 namespace GarageSpace.Services;
 
@@ -21,13 +22,15 @@ public class UsersService : IUsersService
     private readonly IPasswordHasher<Models.User> _passwordHashService;
     private readonly ILogger<UsersService> _logger;
     private readonly IMapper _mapper;
+    private readonly IEventsPublisher _publisher;
 
     public UsersService(
         IEFUserRepository userRepository,
         IOptions<AppSettings> appSettings,
         IPasswordHasher<Models.User> passwordHashService,
         ILogger<UsersService> logger,
-        IMapper mapper
+        IMapper mapper,
+        IEventsPublisher publisher
         )
     {
         _userRepository = userRepository;
@@ -35,6 +38,7 @@ public class UsersService : IUsersService
         _appSettings = appSettings.Value;
         _logger = logger;
         _mapper = mapper;
+        _publisher = publisher;
     }
 
     public async Task<string?> GetToken(string email, string password)
@@ -141,5 +145,35 @@ public class UsersService : IUsersService
     public Task<bool> UpdateUser(long id, UserDto user)
     {
         throw new NotImplementedException();
+    }
+
+    public async Task<long> CreateUser(UserDto dto)
+    {
+        try
+        {
+            var user = _mapper.Map<User>(dto);
+
+            var createdEntity = await _userRepository.CreateAsync(user);
+            
+            PublishCreateUserEvent(createdEntity.Id, dto.Name);
+
+            return createdEntity.Id;
+        }
+        catch (Exception ex) 
+        {
+            throw;
+        }
+    }
+
+    private void PublishCreateUserEvent(long userId, string name)
+    {
+        var msg = new UserCreated 
+        {
+            UserId = userId,
+            Name = name
+        };
+
+
+        //_publisher.Publish(msg);
     }
 }
