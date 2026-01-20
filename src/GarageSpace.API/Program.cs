@@ -37,10 +37,9 @@ builder.Services.AddTransient<IIdGenerator, CustomIdGenerator>();
 builder.Services.AddScoped<ICarsService, CarsService>();
 builder.Services.AddScoped<IGarageService, GarageService>();
 builder.Services.AddScoped<IJournalsService, JournalsService>();
-// Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -83,14 +82,11 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<MainDbContext>();
 
-    // Make sure DB is created
     context.Database.Migrate();
 
-    // Seed data
     MockData.SetupMockData(context);
 }
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

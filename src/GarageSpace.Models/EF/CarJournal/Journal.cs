@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.Extensions.Logging.Abstractions;
 using GarageSpace.Data.Models.EF.Vehicles;
 
 namespace GarageSpace.Data.Models.EF.CarJournal

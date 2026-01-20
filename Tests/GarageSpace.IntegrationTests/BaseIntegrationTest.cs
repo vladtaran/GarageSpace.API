@@ -26,8 +26,8 @@ public abstract class BaseIntegrationTest : IDisposable
 
         DbContext = new MainDbContext(options);
         
-        // Ensure database is created
-        //DbContext.Database.EnsureCreated();
+        // Ensure database schema exists (apply EF Core migrations)
+        DbContext.Database.Migrate();
     }
 
     protected async Task CleanupDatabase()
