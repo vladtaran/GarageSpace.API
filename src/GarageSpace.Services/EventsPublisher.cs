@@ -1,4 +1,5 @@
-﻿using GarageSpace.Services.Interfaces;
+﻿using GarageSpace.Contracts.Interfaces;
+using GarageSpace.Services.Interfaces;
 
 namespace GarageSpace.Services
 {

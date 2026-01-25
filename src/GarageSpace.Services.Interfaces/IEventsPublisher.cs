@@ -1,4 +1,6 @@
-﻿namespace GarageSpace.Services.Interfaces
+﻿using GarageSpace.Contracts.Interfaces;
+
+namespace GarageSpace.Services.Interfaces
 {
     public interface IEventsPublisher
     {

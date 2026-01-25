@@ -147,15 +147,15 @@ public class UsersService : IUsersService
         throw new NotImplementedException();
     }
 
-    public async Task<long> CreateUser(UserDto dto)
+    public async Task<long> RegisterUser(UserDto dto)
     {
         try
         {
             var user = _mapper.Map<User>(dto);
 
             var createdEntity = await _userRepository.CreateAsync(user);
-            
-            PublishCreateUserEvent(createdEntity.Id, dto.Name);
+
+            PublishUserRegisteredEvent(createdEntity.Id, dto.Name, user.Nickname, user.Email);
 
             return createdEntity.Id;
         }
@@ -165,15 +165,17 @@ public class UsersService : IUsersService
         }
     }
 
-    private void PublishCreateUserEvent(long userId, string name)
+    private void PublishUserRegisteredEvent(long userId, string name, string nickName, string email)
     {
-        var msg = new UserCreated 
+        var msg = new UserRegistered 
         {
             UserId = userId,
-            Name = name
+            Name = name,
+            Nickname = nickName,
+            Email = email
         };
 
 
-        //_publisher.Publish(msg);
+        _publisher.Publish(msg);
     }
 }

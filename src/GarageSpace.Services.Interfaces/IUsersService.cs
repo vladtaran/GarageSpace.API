@@ -10,6 +10,6 @@ public interface IUsersService
     public Task<UserDto> GetUserById(long id);
     Task<UserDto> GetByNickname(string name);
 
-    Task<long> CreateUser(UserDto user);
+    Task<long> RegisterUser(UserDto user);
     Task<bool> UpdateUser(long id, UserDto user);
 }
