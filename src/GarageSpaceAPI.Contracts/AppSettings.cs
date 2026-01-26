@@ -1,4 +1,4 @@
-﻿namespace GarageSpace.Contracts;
+﻿namespace GarageSpaceAPI.Contracts;
 
 public class AppSettings
 {

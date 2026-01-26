@@ -1,5 +1,5 @@
 ﻿
-using GarageSpace.Contracts;
+using GarageSpaceAPI.Contracts;
 
 namespace GarageSpace.Controllers.Request;
 

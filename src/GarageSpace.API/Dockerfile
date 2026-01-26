@@ -8,7 +8,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0-bookworm-slim AS build
 WORKDIR /src
 
 COPY ["src/GarageSpace.API/GarageSpace.API.csproj", "GarageSpace.API/GarageSpace.API.csproj"]
-COPY ["src/GarageSpace.Contracts/GarageSpace.Contracts.csproj", "GarageSpace.Contracts/GarageSpace.Contracts.csproj"]
+COPY ["src/GarageSpaceAPI.Contracts/GarageSpaceAPI.Contracts.csproj", "GarageSpaceAPI.Contracts/GarageSpaceAPI.Contracts.csproj"]
 COPY ["src/GarageSpace.Models/GarageSpace.Models.csproj", "GarageSpace.Models/GarageSpace.Models.csproj"]
 COPY ["src/GarageSpace.Repository.EntityFramework/GarageSpace.Repository.EntityFramework.csproj", "GarageSpace.Repository.EntityFramework/GarageSpace.Repository.EntityFramework.csproj"]
 COPY ["src/GarageSpace.Repository.Interfaces/GarageSpace.Repository.Interfaces.csproj", "GarageSpace.Repository.Interfaces/GarageSpace.Repository.Interfaces.csproj"]

@@ -2,7 +2,7 @@
 
 namespace GarageSpace.Repository.Interfaces.EF;
 
-public interface IEFJournalsRepository
+public interface IEFJournalsRepository : IBaseRepository
 {
     Task<ICollection<Journal>> GetByVehicleId(long id);
     Task<ICollection<Journal>> ListAllAsync();

@@ -1,4 +1,4 @@
-﻿using GarageSpace.Contracts.Dto;
+﻿using GarageSpaceAPI.Contracts.Dto;
 
 namespace GarageSpace.Services.Interfaces;
 

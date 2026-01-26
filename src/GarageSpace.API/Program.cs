@@ -5,7 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using GarageSpace.Services.Interfaces;
 using GarageSpace.Services;
-using GarageSpace.Contracts;
+using GarageSpaceAPI.Contracts;
 using GarageSpace.Data.Models.MongoDB;
 using GarageSpace.Repository.EntityFramework;
 using Microsoft.EntityFrameworkCore;

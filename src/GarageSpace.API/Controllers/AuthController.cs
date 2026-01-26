@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using GarageSpace.Contracts.Dto;
-using GarageSpace.Contracts.Request;
+using GarageSpaceAPI.Contracts.Dto;
+using GarageSpaceAPI.Contracts.Request;
 using GarageSpace.Repository.Interfaces.MongoDB;
 using GarageSpace.Services.Interfaces;
 

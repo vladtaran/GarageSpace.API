@@ -1,6 +1,6 @@
-﻿using GarageSpace.Contracts.Dto.Vehicle;
+﻿using GarageSpaceAPI.Contracts.Dto.Vehicle;
 
-namespace GarageSpace.Contracts.Dto
+namespace GarageSpaceAPI.Contracts.Dto
 {
     public class JournalDto : BaseAuditableEntityDto
     {
