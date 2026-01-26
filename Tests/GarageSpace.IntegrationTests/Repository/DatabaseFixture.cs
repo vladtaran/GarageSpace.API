@@ -2,14 +2,13 @@
 using Microsoft.Extensions.Configuration;
 using GarageSpace.Repository.EntityFramework;
 
-namespace GarageSpace.IntegrationTests
+namespace GarageSpace.IntegrationTests.Repository
 {
     public class DatabaseFixture : IAsyncLifetime
     {
         public async Task InitializeAsync()
         {
             await EnsureDatabaseMigrated();
-            await CleanupDatabase();
         }
 
         public async Task DisposeAsync()
@@ -17,7 +16,7 @@ namespace GarageSpace.IntegrationTests
             await CleanupDatabase();
         }
 
-        private static MainDbContext CreateDbContext()
+        public MainDbContext CreateDbContext()
         {
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -33,7 +32,7 @@ namespace GarageSpace.IntegrationTests
             return new MainDbContext(options);
         }
 
-        private static async Task EnsureDatabaseMigrated()
+        private async Task EnsureDatabaseMigrated()
         {
             await using var dbContext = CreateDbContext();
             await dbContext.Database.MigrateAsync();
@@ -41,7 +40,6 @@ namespace GarageSpace.IntegrationTests
 
         public async Task CleanupDatabase()
         {
-            await EnsureDatabaseMigrated();
             await using var dbContext = CreateDbContext();
 
             dbContext.Countries.RemoveRange(dbContext.Countries);

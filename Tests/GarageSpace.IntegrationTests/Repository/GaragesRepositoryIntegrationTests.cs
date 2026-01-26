@@ -1,64 +1,40 @@
-using Microsoft.EntityFrameworkCore;
 using GarageSpace.Data.Models.EF;
 using GarageSpace.Repository.EntityFramework;
-using Xunit;
+using Microsoft.EntityFrameworkCore;
 
 namespace GarageSpace.IntegrationTests.Repository;
 
-[Collection("IntegrationTests Collection")]
-public class GaragesRepositoryIntegrationTests : BaseIntegrationTest
+public class GaragesRepositoryIntegrationTests : BaseIntegrationTest<GaragesRepository>
 {
-    private readonly GaragesRepository _repository;
     private readonly DatabaseFixture _fixture;
 
-    public GaragesRepositoryIntegrationTests(DatabaseFixture fixture)
+    public GaragesRepositoryIntegrationTests(DatabaseFixture fixture) : base(fixture)
     {
         _fixture = fixture;
-        _repository = new GaragesRepository(DbContext);
     }
-
-    private async Task<User> SetupCustomUserData(string email, string name, string nickname)
+    protected override GaragesRepository CreateRepository(MainDbContext dbContext)
     {
-        var user = new User
-        {
-            Name = name,
-            Nickname = nickname,
-            Email = email
-        };
-        DbContext.Users.Add(user);
-        await DbContext.SaveChangesAsync();
-
-        return user;
-    }
-    private async Task<User> SetupTestData()
-    {
-        var user = new User
-        {
-            Name = "testName",
-            Nickname = "testNickName",
-            Email = "test.email@email.com"
-        };
-        DbContext.Users.Add(user);
-        await DbContext.SaveChangesAsync();
-
-        return user;
+        return new GaragesRepository(dbContext);
     }
 
     [Fact]
     public async Task CreateAsync_ValidGarage_ReturnsCreatedGarage()
     {
         // Arrange
-        var user = await SetupTestData();
+        var (dbContext, repository) = CreateDbContext();
+
+        User user = await CreateUserInDatabase(dbContext);
+
         var garage = new UserGarage
         {
             OwnerId = user.Id
         };
 
         // Act
-        await _repository.CreateAsync(garage);
+        await repository.CreateAsync(garage);
 
         // Assert
-        var createdGarage = await DbContext.Garages.FindAsync(garage.Id);
+        var createdGarage = await dbContext.Garages.FindAsync(garage.Id);
         Assert.NotNull(createdGarage);
         Assert.Equal(user.Id, createdGarage.OwnerId);
     }
@@ -67,16 +43,19 @@ public class GaragesRepositoryIntegrationTests : BaseIntegrationTest
     public async Task GetByIdAsync_ExistingGarage_ReturnsGarage()
     {
         // Arrange
-        var user = await SetupTestData();
+        var (dbContext, repository) = CreateDbContext();
+        User user = await CreateUserInDatabase(dbContext);
+
         var garage = new UserGarage
         {
             OwnerId = user.Id
         };
-        DbContext.Garages.Add(garage);
-        await DbContext.SaveChangesAsync();
+        dbContext.Garages.Add(garage);
+        await dbContext.SaveChangesAsync();
+
 
         // Act
-        var result = await _repository.GetByIdAsync(garage.Id);
+        var result = await repository.GetByIdAsync(garage.Id);
 
         // Assert
         Assert.NotNull(result);
@@ -88,20 +67,22 @@ public class GaragesRepositoryIntegrationTests : BaseIntegrationTest
     public async Task UpdateAsync_ExistingGarage_ReturnsTrue()
     {
         // Arrange
-        var user = await SetupTestData();
+        var (dbContext, repository) = CreateDbContext();
+        User user = await CreateUserInDatabase(dbContext);
+
         var garage = new UserGarage
         {
             OwnerId = user.Id
         };
-        DbContext.Garages.Add(garage);
-        await DbContext.SaveChangesAsync();
+        dbContext.Garages.Add(garage);
+        await dbContext.SaveChangesAsync();
 
         // Act
-        var result = await _repository.UpdateAsync(garage);
+        var result = await repository.UpdateAsync(garage);
 
         // Assert
         Assert.True(result);
-        var updatedGarage = await DbContext.Garages.FindAsync(garage.Id);
+        var updatedGarage = await dbContext.Garages.FindAsync(garage.Id);
         Assert.NotNull(updatedGarage);
     }
 
@@ -109,20 +90,22 @@ public class GaragesRepositoryIntegrationTests : BaseIntegrationTest
     public async Task DeleteAsync_ExistingGarage_ReturnsTrue()
     {
         // Arrange
-        var user = await SetupTestData();
+        var (dbContext, repository) = CreateDbContext();
+        User user = await CreateUserInDatabase(dbContext);
+
         var garage = new UserGarage
         {
             OwnerId = user.Id
         };
-        DbContext.Garages.Add(garage);
-        await DbContext.SaveChangesAsync();
+        dbContext.Garages.Add(garage);
+        await dbContext.SaveChangesAsync();
 
         // Act
-        var result = await _repository.DeleteAsync(garage.Id);
+        var result = await repository.DeleteAsync(garage.Id);
 
         // Assert
         Assert.True(result);
-        var deletedGarage = await DbContext.Garages.FindAsync(garage.Id);
+        var deletedGarage = await dbContext.Garages.FindAsync(garage.Id);
         Assert.Null(deletedGarage);
     }
 
@@ -130,22 +113,23 @@ public class GaragesRepositoryIntegrationTests : BaseIntegrationTest
     public async Task ListAllAsync_ReturnsAllGarages()
     {
         // Arrange
-        // Verify database is clean
         await _fixture.CleanupDatabase();
 
-        var user1 = await SetupCustomUserData("user1@email.com", "testName1", "testNickName1");
-        var user2 = await SetupCustomUserData("user2@email.com", "testName2", "testNickName2");
-        
+        var (dbContext, repository) = CreateDbContext();
+
+        var user1 = await CreateUserInDatabase(dbContext, "user1@email.com", "testName1", "testNickName1");
+        var user2 = await CreateUserInDatabase(dbContext, "user2@email.com", "testName2", "testNickName2");
+
         var garages = new List<UserGarage>
         {
             new() { OwnerId = user1.Id },
             new() { OwnerId = user2.Id }
         };
-        DbContext.Garages.AddRange(garages);
-        await DbContext.SaveChangesAsync();
+        dbContext.Garages.AddRange(garages);
+        await dbContext.SaveChangesAsync();
 
         // Act
-        var result = await _repository.ListAllAsync();
+        var result = await repository.ListAllAsync();
 
         // Assert
         Assert.Equal(2, result.Count);
@@ -157,12 +141,13 @@ public class GaragesRepositoryIntegrationTests : BaseIntegrationTest
     public async Task SearchAsync_WithPagination_ReturnsCorrectGarages()
     {
         // Arrange
-        // Verify database is clean
         await _fixture.CleanupDatabase();
 
-        var user1 = await SetupCustomUserData("user1@email.com", "testName1", "testNickName1");
-        var user2 = await SetupCustomUserData("user2@email.com", "testName2", "testNickName2");
-        var user3 = await SetupCustomUserData("user3@email.com", "testName3", "testNickName3");
+        var (dbContext, repository) = CreateDbContext();
+
+        var user1 = await CreateUserInDatabase(dbContext, "user1@email.com", "testName1", "testNickName1");
+        var user2 = await CreateUserInDatabase(dbContext, "user2@email.com", "testName2", "testNickName2");
+        var user3 = await CreateUserInDatabase(dbContext, "user3@email.com", "testName3", "testNickName3");
 
         var garages = new List<UserGarage>
         {
@@ -170,11 +155,11 @@ public class GaragesRepositoryIntegrationTests : BaseIntegrationTest
             new() { OwnerId = user2.Id },
             new() { OwnerId = user3.Id }
         };
-        DbContext.Garages.AddRange(garages);
-        await DbContext.SaveChangesAsync();
+        dbContext.Garages.AddRange(garages);
+        await dbContext.SaveChangesAsync();
 
         // Act
-        var result = await _repository.SearchAsync(take: 2, skip: 1);
+        var result = await repository.SearchAsync(take: 2, skip: 1);
 
         // Assert
         Assert.Equal(2, result.Count);
@@ -186,48 +171,45 @@ public class GaragesRepositoryIntegrationTests : BaseIntegrationTest
     public async Task GetTotalCountAsync_ReturnsCorrectCount()
     {
         // Arrange
-        // Verify database is clean
-        await _fixture.CleanupDatabase();
+        var (dbContext, repository) = CreateDbContext();
 
-        var initialCount = await _repository.GetTotalCountAsync();
-        Assert.Equal(0, initialCount);
-        
-        var user1 = await SetupCustomUserData("user1@email.com", "testName1", "testNickName1");
-        var user2 = await SetupCustomUserData("user2@email.com", "testName2", "testNickName2");
-        
+        var user1 = await CreateUserInDatabase(dbContext, "user1@email.com", "testName1", "testNickName1");
+        var user2 = await CreateUserInDatabase(dbContext, "user2@email.com", "testName2", "testNickName2");
+
         var garages = new List<UserGarage>
         {
             new() { OwnerId = user1.Id },
             new() { OwnerId = user2.Id }
         };
-        DbContext.Garages.AddRange(garages);
-        await DbContext.SaveChangesAsync();
 
-        // Verify data was added
-        var actualCount = await DbContext.Garages.CountAsync();
-        Assert.Equal(2, actualCount);
+        dbContext.Garages.AddRange(garages);
+        await dbContext.SaveChangesAsync();
+
+        var expectedResult = await dbContext.Garages.CountAsync();
 
         // Act
-        var result = await _repository.GetTotalCountAsync();
+        var actualResult = await repository.GetTotalCountAsync();
 
         // Assert
-        Assert.Equal(2, result);
+        Assert.Equal(expectedResult, actualResult);
     }
 
     [Fact]
     public async Task GetByOwnerIdAsync_ExistingGarage_ReturnsGarage()
     {
         // Arrange
-        var user = await SetupTestData();
+        var (dbContext, repository) = CreateDbContext();
+        var user = await CreateUserInDatabase(dbContext);
+
         var garage = new UserGarage
         {
             OwnerId = user.Id
         };
-        DbContext.Garages.Add(garage);
-        await DbContext.SaveChangesAsync();
+        dbContext.Garages.Add(garage);
+        await dbContext.SaveChangesAsync();
 
         // Act
-        var result = await _repository.GetByOwnerIdAsync(user.Id);
+        var result = await repository.GetByOwnerIdAsync(user.Id);
 
         // Assert
         Assert.NotNull(result);
@@ -239,13 +221,26 @@ public class GaragesRepositoryIntegrationTests : BaseIntegrationTest
     public async Task GetByOwnerIdAsync_NonExistingGarage_ReturnsNull()
     {
         // Arrange
-        var user = await SetupTestData();
+        var (dbContext, repository) = CreateDbContext();
+        var user = await CreateUserInDatabase(dbContext);
 
         // Act
-        var result = await _repository.GetByOwnerIdAsync(user.Id);
+        var result = await repository.GetByOwnerIdAsync(user.Id);
 
         // Assert
         Assert.Null(result);
     }
-    
+
+    private static async Task<User> CreateUserInDatabase(MainDbContext dbContext, string? name = null, string? nickname = null, string? email = null)
+    {
+        var user = new User
+        {
+            Name = name ?? "testName",
+            Nickname = nickname ?? "testNickName",
+            Email = email ?? "test.email@email.com"
+        };
+        dbContext.Users.Add(user);
+        await dbContext.SaveChangesAsync();
+        return user;
+    }
 } 

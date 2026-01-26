@@ -9,7 +9,6 @@ public interface IUsersService
     public Task<bool> CheckUserExists(string property, string value);
     public Task<UserDto> GetUserById(long id);
     Task<UserDto> GetByNickname(string name);
-
     Task<long> RegisterUser(UserDto user);
     Task<bool> UpdateUser(long id, UserDto user);
 }

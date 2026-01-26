@@ -5,7 +5,7 @@ namespace GarageSpace.Repository.Interfaces.EF;
 /// <summary>
 /// Repository interface for managing UserGarage entities in the database.
 /// </summary>
-public interface IEFGaragesRepository
+public interface IEFGaragesRepository : IBaseRepository
 {
     /// <summary>
     /// Searches for user garages with pagination.
