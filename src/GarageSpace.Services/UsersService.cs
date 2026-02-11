@@ -1,4 +1,11 @@
 ﻿using AutoMapper;
+using GarageSpace.Contracts;
+using GarageSpace.Data.Models.EF;
+using GarageSpace.EventBus.SDK.Abstractions;
+using GarageSpace.Repository.Interfaces.EF;
+using GarageSpace.Services.Interfaces;
+using GarageSpaceAPI.Contracts;
+using GarageSpaceAPI.Contracts.Dto;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -6,12 +13,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using GarageSpaceAPI.Contracts;
-using GarageSpace.Data.Models.EF;
-using GarageSpace.Repository.Interfaces.EF;
-using GarageSpace.Services.Interfaces;
-using GarageSpaceAPI.Contracts.Dto;
-using GarageSpace.Contracts;
 
 namespace GarageSpace.Services;
 
@@ -22,7 +23,7 @@ public class UsersService : IUsersService
     private readonly IPasswordHasher<Models.User> _passwordHashService;
     private readonly ILogger<UsersService> _logger;
     private readonly IMapper _mapper;
-    private readonly IEventsPublisher _publisher;
+    private readonly IEventBusPublisher _publisher;
 
     public UsersService(
         IEFUserRepository userRepository,
@@ -30,7 +31,7 @@ public class UsersService : IUsersService
         IPasswordHasher<Models.User> passwordHashService,
         ILogger<UsersService> logger,
         IMapper mapper,
-        IEventsPublisher publisher
+        IEventBusPublisher publisher
         )
     {
         _userRepository = userRepository;
@@ -155,19 +156,20 @@ public class UsersService : IUsersService
 
             var createdEntity = await _userRepository.CreateAsync(user);
 
-            PublishUserRegisteredEvent(createdEntity.Id, dto.Name, user.Nickname, user.Email);
+            await PublishUserRegisteredEvent(createdEntity.Id, dto.Name, user.Nickname, user.Email);
 
             return createdEntity.Id;
         }
         catch (Exception ex) 
         {
+            _logger.LogError(ex, "User registration failed. Email: {userEmail}", dto.Email);
             throw;
         }
     }
 
-    private void PublishUserRegisteredEvent(long userId, string name, string nickName, string email)
+    private async Task PublishUserRegisteredEvent(long userId, string name, string nickName, string email)
     {
-        var msg = new UserRegistered 
+        var msg = new UserRegistered
         {
             UserId = userId,
             Name = name,
@@ -176,6 +178,6 @@ public class UsersService : IUsersService
         };
 
 
-        _publisher.Publish(msg);
+        await _publisher.PublishAsync(msg);
     }
 }
