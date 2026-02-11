@@ -12,6 +12,7 @@ using GarageSpace.Repository.Interfaces.EF;
 using GarageSpace.Services;
 using GarageSpace.Services.Interfaces;
 using Xunit;
+using GarageSpace.EventBus.SDK.Abstractions;
 
 namespace GarageSpace.UnitTests.Service;
 
@@ -23,7 +24,7 @@ public class UsersServiceTest
     private IOptions<AppSettings> _appSettings;
     private ILogger<UsersService> _usersServiceLoggerMock;
     private IMapper _mapperMock;
-    private IEventsPublisher _eventsPublisher;
+    private IEventBusPublisher _eventsPublisher;
 
     public UsersServiceTest()
     {
@@ -32,7 +33,7 @@ public class UsersServiceTest
         _passwordHasherMock = Substitute.For<IPasswordHasher<Services.Models.User>>();
         _usersServiceLoggerMock = Substitute.For<ILogger<UsersService>>();
         _mapperMock = Substitute.For<IMapper>();
-        _eventsPublisher = Substitute.For<IEventsPublisher>();
+        _eventsPublisher = Substitute.For<IEventBusPublisher>();
 
         _usersService = new UsersService(_userRepositoryMock, _appSettings, _passwordHasherMock, _usersServiceLoggerMock, _mapperMock, _eventsPublisher);
     }

@@ -1,22 +1,28 @@
-﻿using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using GarageSpace.Services.Interfaces;
-using GarageSpace.Services;
-using GarageSpaceAPI.Contracts;
+﻿using GarageSpace;
+using GarageSpace.API.Mapping;
+using GarageSpace.Common;
 using GarageSpace.Data.Models.MongoDB;
+using GarageSpace.EventBus.SDK.Extensions;
 using GarageSpace.Repository.EntityFramework;
-using Microsoft.EntityFrameworkCore;
-using GarageSpace;
 using GarageSpace.Repository.Interfaces.EF;
 using GarageSpace.Repository.Interfaces.MongoDB;
 using GarageSpace.Repository.MongoDB;
 using GarageSpace.Repository.MongoDB.DbContext;
-using GarageSpace.Common;
+using GarageSpace.Services;
+using GarageSpace.Services.Interfaces;
+using GarageSpaceAPI.Contracts;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddEnvironmentVariables();
 
 var useMongoDB = builder.Configuration.GetValue<bool>("UseMongoDB");
 if (useMongoDB)
@@ -28,12 +34,14 @@ else
     UseMsSQL(builder);
 }
 
+builder.Services.AddMassTransitEventBus(builder.Configuration);
 
 builder.Services.AddTransient<IPasswordHasher<GarageSpace.Services.Models.User>, PasswordHasher<GarageSpace.Services.Models.User>>();
 builder.Services.AddTransient<IIdGenerator, CustomIdGenerator>();
 
 
-//builder.Services.AddScoped<IUsersService, UsersService>();
+builder.Services.AddScoped<IUsersService, UsersService>();
+builder.Services.AddScoped<IUserObjectsMapper, UserObjectsMapper>();
 builder.Services.AddScoped<ICarsService, CarsService>();
 builder.Services.AddScoped<IGarageService, GarageService>();
 builder.Services.AddScoped<IJournalsService, JournalsService>();
@@ -52,7 +60,6 @@ var appSettingsSection = builder.Configuration.GetSection("AppSettings");
 builder.Services.Configure<AppSettings>(appSettingsSection);
 var appSettings = appSettingsSection.Get<AppSettings>();
 
-
 var origins = appSettings?.AllowedCORSOrignis;
 if (origins != null) 
 {
@@ -69,9 +76,6 @@ if (origins != null)
     });
 
 }
-
-
-//AddAuthentication(builder, appSettings);
 
 builder.Services.AddHttpContextAccessor();
 
@@ -123,7 +127,7 @@ static void UseMsSQL(WebApplicationBuilder builder)
     builder.Services.AddScoped<IEFCarsRepository, GarageSpace.Repository.EntityFramework.CarsRepository>();
     builder.Services.AddScoped<IEFGaragesRepository, GaragesRepository>();
     builder.Services.AddScoped<IEFJournalsRepository, JournalsRepository>();
-    //builder.Services.AddScoped<IUserRepository, GarageSpace.Repository.EntityFramework.UserRepository>();
+    builder.Services.AddScoped<IEFUserRepository, GarageSpace.Repository.EntityFramework.UserRepository>();
     
 }
 

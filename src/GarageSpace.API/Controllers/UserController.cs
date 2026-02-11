@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using GarageSpaceAPI.Contracts;
-using GarageSpaceAPI.Contracts.Dto;
-using GarageSpaceAPI.Contracts.Request;
+using GarageSpace.API.Mapping;
 using GarageSpace.Controllers.Request;
 using GarageSpace.Services.Interfaces;
 using GarageSpaceAPI.Contracts.Dto;
+using GarageSpaceAPI.Contracts.Request;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GarageSpace.Controllers;
 
@@ -18,15 +17,18 @@ public class UserController : ControllerBase
     private readonly IUsersService _usersService;
     private readonly ICarsService _carsService;
     private readonly IMapper _mapper;
+    private readonly IUserObjectsMapper _userObjectsMapper;
     
     public UserController(
         IUsersService usersService,
         ICarsService carsService,
-        IMapper mapper)
+        IMapper mapper,
+        IUserObjectsMapper userObjectsMapper)
     {
         _usersService = usersService;
         _carsService = carsService;
         _mapper = mapper;
+        _userObjectsMapper = userObjectsMapper;
     }
 
     [HttpGet("{id}")]
@@ -78,5 +80,21 @@ public class UserController : ControllerBase
     {
         var isUserExists = await _usersService.CheckUserExists(request.Property, request.Value);
         return Ok(isUserExists);
+    }
+
+    [AllowAnonymous]
+    [HttpPost]
+    public async Task<IActionResult> Create(UserCreateRequest request)
+    {
+        var user = _userObjectsMapper.MapCreateUserRequestToUser(request);
+
+        long? userId = await _usersService.RegisterUser(user);
+
+        if (userId.HasValue)
+        {
+            return Ok(userId.Value);
+        }
+
+        return BadRequest("Failed to register a new user.");
     }
 }
