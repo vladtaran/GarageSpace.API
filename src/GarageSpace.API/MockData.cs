@@ -1,8 +1,8 @@
-﻿using GarageSpace.Data.Models.EF.Vehicles;
-using GarageSpace.Data.Models.EF;
+﻿using GarageSpace.Models.Repository.EF.Vehicles;
 using GarageSpace.Repository.EntityFramework;
-using GarageSpace.Data.Models.EF.CarJournal;
+using GarageSpace.Models.Repository.EF.CarJournal;
 using GarageSpace.Data.Models;
+using GarageSpace.Models.Repository.EF;
 
 namespace GarageSpace
 {
@@ -26,16 +26,16 @@ namespace GarageSpace
             var manufacturerLev = new Manufacturer { ManufacturerCountry = country2, ManufacturerName = ManufacturerEnum.Kawasaki, YearCreation = 1950 };
 
             //Create Users
-            var user1 = new GarageSpace.Data.Models.EF.User { Name = "Vladyslav", Surname = "Tar", Nickname = "Vynd", DriverExperience = 10, Email = "vlad@gmail.com", Phone = "1234567890", Gender = GenderEnum.Male, CreatedAt = DateTime.UtcNow };
-            var user2 = new GarageSpace.Data.Models.EF.User { Name = "Serg", Surname = "Postkevich", Nickname = "Geek", DriverExperience = 6, Email = "geek@gmail.com", Phone = "123654787", Gender = GenderEnum.Male, CreatedAt = DateTime.UtcNow };
+            var user1 = new User { Name = "Vladyslav", Surname = "Tar", Nickname = "Vynd", DriverExperience = 10, Email = "vlad@gmail.com", Phone = "1234567890", Gender = GenderEnum.Male, CreatedAt = DateTime.UtcNow };
+            var user2 = new User { Name = "Serg", Surname = "Postkevich", Nickname = "Geek", DriverExperience = 6, Email = "geek@gmail.com", Phone = "123654787", Gender = GenderEnum.Male, CreatedAt = DateTime.UtcNow };
 
 
             // Create a Common entity
-            var garage1 = new GarageSpace.Data.Models.EF.UserGarage { Owner = user1, CreatedAt = DateTime.UtcNow };
-            var garage2 = new GarageSpace.Data.Models.EF.UserGarage { Owner = user2, CreatedAt = DateTime.UtcNow };
+            var garage1 = new UserGarage { Owner = user1, CreatedAt = DateTime.UtcNow };
+            var garage2 = new UserGarage { Owner = user2, CreatedAt = DateTime.UtcNow };
 
             // Create some Bs
-            var b1 = new GarageSpace.Data.Models.EF.Vehicles.Car
+            var b1 = new Car
             {
                 Name = "Toyota Tundra",
                 Year = "2017",
@@ -53,7 +53,7 @@ namespace GarageSpace
                 Weight = 3500,
                 VIN = "EU2222222222222222"
             };
-            var b2 = new GarageSpace.Data.Models.EF.Vehicles.Car
+            var b2 = new Car
             {
                 Garage = garage2,
                 Name = "Suzuki Jimny",
@@ -71,7 +71,7 @@ namespace GarageSpace
                 Weight = 2050,
                 VIN = "EU123192378123712371"
             };
-            var b3 = new GarageSpace.Data.Models.EF.Vehicles.Car
+            var b3 = new Car
             {
                 Garage = garage1,
                 Name = "Dodge Journey",

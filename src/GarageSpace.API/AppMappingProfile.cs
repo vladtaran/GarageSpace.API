@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
-using GarageSpaceAPI.Contracts.Dto;
-using GarageSpaceAPI.Contracts.Dto.Vehicle;
-using GarageSpace.Controllers.Request;
-using GarageSpace.Data.Models.EF.CarJournal;
-using GarageSpace.Data.Models.EF.Vehicles;
-using GarageSpaceAPI.Contracts.Dto;
-using GarageSpaceAPI.Contracts.Dto.Vehicle;
+using GarageSpace.API.Contracts.Dto;
+using GarageSpace.API.Contracts.Dto.Vehicle;
+using GarageSpace.Models.Repository.EF;
+using GarageSpace.Models.Repository.EF.CarJournal;
+using GarageSpace.Models.Repository.EF.Vehicles;
+using GarageSpace.API.Contracts.Request;
 
 namespace GarageSpace;
 
@@ -14,7 +13,7 @@ public class AppMappingProfile : Profile
     public AppMappingProfile()
     {
         CreateMap<UpdateUserRequest, UserDto>();
-        CreateMap<GarageSpace.Data.Models.EF.User, UserDto>().ReverseMap();
+        CreateMap<User, UserDto>().ReverseMap();
 
         
         // Vehicle mappings
@@ -25,8 +24,8 @@ public class AppMappingProfile : Profile
         CreateMap<Journal, JournalDto>().ReverseMap();
         CreateMap<JournalRecord, JournalRecordDto>().ReverseMap();
 
-        CreateMap<GarageSpace.Data.Models.EF.UserGarage, GarageDto>().ReverseMap();
-        CreateMap<GarageSpace.Data.Models.EF.Manufacturer, ManufacturerDto>().ReverseMap();
-        CreateMap<GarageSpace.Data.Models.EF.Country, CountryDto>().ReverseMap();
+        CreateMap<UserGarage, GarageDto>().ReverseMap();
+        CreateMap<Manufacturer, ManufacturerDto>().ReverseMap();
+        CreateMap<Country, CountryDto>().ReverseMap();
     }
 }

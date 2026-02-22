@@ -1,8 +1,8 @@
 ﻿using MongoDB.Bson;
 using GarageSpace.Repository.MongoDB.DbContext;
 using MongoDB.Driver;
-using GarageSpace.Data.Models.MongoDB;
 using GarageSpace.Repository.Interfaces.MongoDB;
+using GarageSpace.Models.Repository.MongoDB;
 
 namespace GarageSpace.Repository.MongoDB;
 

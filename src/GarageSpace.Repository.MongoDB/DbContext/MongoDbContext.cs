@@ -1,7 +1,7 @@
 ﻿
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using GarageSpace.Data.Models.MongoDB;
+using GarageSpace.Models.Repository.MongoDB;
 
 namespace GarageSpace.Repository.MongoDB.DbContext;
 

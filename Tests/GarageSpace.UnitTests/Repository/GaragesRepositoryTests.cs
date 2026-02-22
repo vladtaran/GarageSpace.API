@@ -2,9 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using GarageSpace.Data.Models.EF;
 using GarageSpace.Repository.EntityFramework;
 using Xunit;
+using GarageSpace.Models.Repository.EF;
 
 namespace GarageSpace.UnitTests.Repository;
 

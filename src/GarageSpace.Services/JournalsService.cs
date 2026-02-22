@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using GarageSpace.Repository.Interfaces.EF;
 using GarageSpace.Services.Interfaces;
-using GarageSpaceAPI.Contracts.Dto;
+using GarageSpace.API.Contracts.Dto;
 
 namespace GarageSpace.Services
 {

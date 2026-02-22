@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using GarageSpace.Contracts;
-using GarageSpace.Data.Models.EF;
 using GarageSpace.EventBus.SDK.Abstractions;
+using GarageSpace.Models.Repository.EF;
 using GarageSpace.Repository.Interfaces.EF;
 using GarageSpace.Services.Interfaces;
-using GarageSpaceAPI.Contracts;
-using GarageSpaceAPI.Contracts.Dto;
+using GarageSpace.API.Contracts;
+using GarageSpace.API.Contracts.Dto;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;

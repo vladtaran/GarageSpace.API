@@ -2,11 +2,11 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using GarageSpace.Data.Models.EF;
-using GarageSpace.Data.Models.EF.Vehicles;
 using GarageSpace.Repository.EntityFramework;
 using Xunit;
 using GenderEnum = GarageSpace.Data.Models.GenderEnum;
+using GarageSpace.Models.Repository.EF;
+using GarageSpace.Models.Repository.EF.Vehicles;
 
 namespace GarageSpace.UnitTests.Repository;
 

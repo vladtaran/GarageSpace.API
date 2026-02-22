@@ -1,4 +1,4 @@
-using GarageSpace.Data.Models.EF;
+using GarageSpace.Models.Repository.EF;
 using GarageSpace.Repository.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 

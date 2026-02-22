@@ -1,4 +1,4 @@
-﻿using GarageSpaceAPI.Contracts.Dto.Vehicle;
+﻿using GarageSpace.API.Contracts.Dto.Vehicle;
 namespace GarageSpace.Services.Interfaces;
 
 public interface ICarsService

@@ -1,4 +1,4 @@
-﻿using GarageSpace.Data.Models.EF;
+﻿using GarageSpace.Models.Repository.EF;
 
 namespace GarageSpace.Repository.Interfaces.EF;
 

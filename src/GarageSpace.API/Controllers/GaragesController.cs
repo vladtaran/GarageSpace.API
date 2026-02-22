@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using GarageSpaceAPI.Contracts;
-using GarageSpaceAPI.Contracts.Common;
-using GarageSpaceAPI.Contracts.Dto;
+using GarageSpace.API.Contracts;
+using GarageSpace.API.Contracts.Common;
+using GarageSpace.API.Contracts.Dto;
 using GarageSpace.Services.Interfaces;
 
 namespace GarageSpace.Controllers;

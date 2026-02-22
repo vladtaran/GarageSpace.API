@@ -1,8 +1,8 @@
 ﻿using GarageSpace;
 using GarageSpace.API.Mapping;
 using GarageSpace.Common;
-using GarageSpace.Data.Models.MongoDB;
 using GarageSpace.EventBus.SDK.Extensions;
+using GarageSpace.Models.Repository.MongoDB;
 using GarageSpace.Repository.EntityFramework;
 using GarageSpace.Repository.Interfaces.EF;
 using GarageSpace.Repository.Interfaces.MongoDB;
@@ -10,7 +10,7 @@ using GarageSpace.Repository.MongoDB;
 using GarageSpace.Repository.MongoDB.DbContext;
 using GarageSpace.Services;
 using GarageSpace.Services.Interfaces;
-using GarageSpaceAPI.Contracts;
+using GarageSpace.API.Contracts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

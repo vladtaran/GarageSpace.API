@@ -1,4 +1,4 @@
-﻿using Car = GarageSpace.Data.Models.EF.Vehicles.Car;
+﻿using Car = GarageSpace.Models.Repository.EF.Vehicles.Car;
 
 namespace GarageSpace.Repository.Interfaces.EF;
 

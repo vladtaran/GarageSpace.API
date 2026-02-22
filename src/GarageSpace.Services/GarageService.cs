@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using GarageSpaceAPI.Contracts.Dto;
+using GarageSpace.API.Contracts.Dto;
 using GarageSpace.Repository.Interfaces.EF;
 using GarageSpace.Services.Interfaces;
 

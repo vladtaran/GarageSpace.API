@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using GarageSpace.Repository.EntityFramework;
 using Xunit;
-using User = GarageSpace.Data.Models.EF.User;
+using User = GarageSpace.Models.Repository.EF.User;
 using GenderEnum = GarageSpace.Data.Models.GenderEnum;
 
 namespace GarageSpace.UnitTests.Repository;
