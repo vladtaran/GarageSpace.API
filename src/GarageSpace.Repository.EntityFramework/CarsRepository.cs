@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using GarageSpace.Repository.Interfaces.EF;
-using Car = GarageSpace.Data.Models.EF.Vehicles.Car;
+using Car = GarageSpace.Models.Repository.EF.Vehicles.Car;
 
 namespace GarageSpace.Repository.EntityFramework;
 

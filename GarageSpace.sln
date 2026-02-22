@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GarageSpace.API", "src\Gara
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GarageSpace.Repository.Interfaces", "src\GarageSpace.Repository.Interfaces\GarageSpace.Repository.Interfaces.csproj", "{355EA7E4-EF3F-9202-EEB5-3342B802DD21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GarageSpaceAPI.Contracts", "src\GarageSpaceAPI.Contracts\GarageSpaceAPI.Contracts.csproj", "{59E86CA1-C984-4B19-A1C9-078A207EAC6B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GarageSpace.API.Contracts", "src\GarageSpace.API.Contracts\GarageSpace.API.Contracts.csproj", "{59E86CA1-C984-4B19-A1C9-078A207EAC6B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GarageSpace.Models", "src\GarageSpace.Models\GarageSpace.Models.csproj", "{94C96ABB-293D-4035-BAE0-2F9C14083BA3}"
 EndProject

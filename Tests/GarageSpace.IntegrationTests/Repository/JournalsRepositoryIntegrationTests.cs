@@ -1,6 +1,6 @@
-using GarageSpace.Data.Models.EF;
-using GarageSpace.Data.Models.EF.CarJournal;
-using GarageSpace.Data.Models.EF.Vehicles;
+using GarageSpace.Models.Repository.EF;
+using GarageSpace.Models.Repository.EF.CarJournal;
+using GarageSpace.Models.Repository.EF.Vehicles;
 using GarageSpace.Repository.EntityFramework;
 
 namespace GarageSpace.IntegrationTests.Repository;

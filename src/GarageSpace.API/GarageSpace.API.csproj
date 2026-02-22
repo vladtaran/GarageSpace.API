@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GarageSpaceAPI.Contracts\GarageSpaceAPI.Contracts.csproj" />
+    <ProjectReference Include="..\GarageSpace.API.Contracts\GarageSpace.API.Contracts.csproj" />
     <ProjectReference Include="..\GarageSpace.Repository.EntityFramework\GarageSpace.Repository.EntityFramework.csproj" />
     <ProjectReference Include="..\GarageSpace.Repository.MongoDB\GarageSpace.Repository.MongoDB.csproj" />
     <ProjectReference Include="..\GarageSpace.Services.Interfaces\GarageSpace.Services.Interfaces.csproj" />

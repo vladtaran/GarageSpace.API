@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using GarageSpaceAPI.Contracts;
-using GarageSpaceAPI.Contracts.Request;
-using GarageSpaceAPI.Contracts.Common;
+using GarageSpace.API.Contracts;
+using GarageSpace.API.Contracts.Request;
+using GarageSpace.API.Contracts.Common;
 using GarageSpace.Services.Interfaces;
-using GarageSpaceAPI.Contracts.Dto.Vehicle;
+using GarageSpace.API.Contracts.Dto.Vehicle;
 
 namespace GarageSpace.Controllers;
 

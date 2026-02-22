@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using GarageSpace.Data.Models.EF;
-using GarageSpace.Data.Models.EF.CarJournal;
-using GarageSpace.Data.Models.EF.Vehicles;
 using GarageSpace.Repository.EntityFramework;
 using Xunit;
+using GarageSpace.Models.Repository.EF;
+using GarageSpace.Models.Repository.EF.CarJournal;
+using GarageSpace.Models.Repository.EF.Vehicles;
 
 namespace GarageSpace.UnitTests.Repository;
 

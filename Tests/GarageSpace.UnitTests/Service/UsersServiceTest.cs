@@ -5,14 +5,14 @@ using Microsoft.Extensions.Options;
 using NSubstitute;
 using System;
 using System.Threading.Tasks;
-using GarageSpaceAPI.Contracts;
-using GarageSpaceAPI.Contracts.Dto;
-using GarageSpace.Data.Models.EF;
+using GarageSpace.API.Contracts;
+using GarageSpace.API.Contracts.Dto;
 using GarageSpace.Repository.Interfaces.EF;
 using GarageSpace.Services;
 using GarageSpace.Services.Interfaces;
 using Xunit;
 using GarageSpace.EventBus.SDK.Abstractions;
+using GarageSpace.Models.Repository.EF;
 
 namespace GarageSpace.UnitTests.Service;
 
