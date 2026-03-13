@@ -51,7 +51,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My Garage API", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Garage Space API", Version = "v1" });
 });
 
 builder.Services.AddAutoMapper(typeof(AppMappingProfile));
@@ -96,7 +96,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "CarGarage API V1");
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "GarageSpace API V1");
     });
 }
 
